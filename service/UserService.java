@@ -139,12 +139,19 @@ public class UserService {
 		
 		for(Room room : Database.rooms.keySet()) {
 			if(room.id.equals(id)) {
-				Database.rooms.put(room, true);
-				break;
-			}
+				if(!Database.rooms.get(room)) {
+					Database.rooms.put(room, true);
+					System.out.println("--------------------------------------------------------------------------");
+					System.out.println("Room Cancelled");
+				}
+				else {
+					System.out.println("--------------------------------------------------------------------------");
+					System.out.println("Room not booked");
+				}
+				return;
+			} 
 		}
-		System.out.println("--------------------------------------------------------------------------");
-		System.out.println("Room Cancelled");
+		
 //		Iterator<Booking> iter = Database.bookRecord.iterator();
 //		while (iter.hasNext()) {
 //		    Booking booking = iter.next();
