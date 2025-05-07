@@ -7,6 +7,7 @@ import java.util.Scanner;
 import project.SRBMS.service.UserService;
 import project.SRBMS.Driver.*;
 
+@SuppressWarnings("resource")
 public class RegularUser extends User{
 
 	public ArrayList<Room> rooms = new ArrayList<Room>();
@@ -26,8 +27,10 @@ public class RegularUser extends User{
 		System.out.println("|  showrooms-> Show Available Rooms  |  book-> Book a Room               |");
 		System.out.println("|  cancel-> Cancel a Room            |  showbooked-> Show Booked Room(s) |");
 		System.out.println("|  addtocart-> Add to Cart           |  showcart-> Show Cart             |");
+		System.out.println("|  edit-> Edit account details       |  showdetails-> Show User Details  |");
 		System.out.println("|  signout-> Sign Out                |  help-> Show Features List        |");
 		System.out.println("**************************************************************************");
+		
 		Scanner sc = new Scanner(System.in);
         boolean flag = true;
         while(flag) {
@@ -59,13 +62,7 @@ public class RegularUser extends User{
             		System.out.print("Enter room ID: ");
                     String id2 = sc.nextLine();
                     Room temp2 = UserService.getRoom(id2);
-                	if(temp2 != null) {
-                		rooms.remove(temp2);
-                		UserService.cancelRoom(id2);
-                	}
-                	else {
-                		System.out.println("No room booked with given id!!!");
-                	}  
+                	UserService.cancelRoom(id2, this, temp2);
             	}
             	else if(choice.equalsIgnoreCase("showbooked")) {
             		UserService.showBookedRooms(this);
@@ -81,6 +78,12 @@ public class RegularUser extends User{
             	}
             	else if(choice.equalsIgnoreCase("showcart")) {
             		UserService.showCart(this);
+            	}
+            	else if(choice.equalsIgnoreCase("edit")) {
+            		UserService.edit(this);
+            	}
+            	else if(choice.equalsIgnoreCase("showdetails")) {
+            		UserService.show(this);
             	}
             	else if(choice.equalsIgnoreCase("signout")) {
             		String[] temp3 = {""};
@@ -110,7 +113,6 @@ public class RegularUser extends User{
 				sc.nextLine();
             }
         }
-        sc.close();
 	}
 	
 }

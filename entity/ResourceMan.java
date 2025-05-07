@@ -5,6 +5,7 @@ import java.util.Scanner;
 import project.SRBMS.Driver.DriverClass;
 import project.SRBMS.service.*;
 
+@SuppressWarnings("resource")
 public class ResourceMan extends User{
 	
 	public ResourceMan(String id, String pass, String name) {
@@ -55,12 +56,16 @@ public class ResourceMan extends User{
             		int ch3 = sc.nextInt();
             		sc.nextLine();
             		if(ch3 == 1) {
+                		System.out.println("--------------------------------------------------------------------------");
             			System.out.println("Enter new cost/hour: ");
                 		double cost2 = sc.nextDouble();
                 		sc.nextLine();
                 		ResourceService.editRoom(id2, cost2);
             		}
-            		else System.out.println("Wrong choice.");
+            		else {
+                		System.out.println("--------------------------------------------------------------------------");
+            			System.out.println("Wrong choice.");
+            		}
             	}
             	else if(choice.equals("deleteroom")) {
             		System.out.println("--------------------------------------------------------------------------");
@@ -95,6 +100,7 @@ public class ResourceMan extends User{
             		System.out.println("Wrong choice");
             	}
             	
+        		System.out.println("--------------------------------------------------------------------------");
                 System.out.print("Do you want to continue(y/n)? ");
                 String choice2 = sc.nextLine();
                 if(choice2.equalsIgnoreCase("n")) flag = false;
@@ -104,7 +110,6 @@ public class ResourceMan extends User{
 				sc.nextLine(); 
             }
         }
-		sc.close();
 	}
 
 }

@@ -6,8 +6,8 @@ import project.SRBMS.entity.Admin;
 import project.SRBMS.entity.ResourceMan;
 import project.SRBMS.service.*;
 
+@SuppressWarnings("resource")
 public class DriverClass {
-
 	public static void main(String[] args) {
 		System.out.println("-------------------------------------------------------------------");
 		System.out.println("*****************************WELCOME TO SRBMS**********************");
@@ -16,14 +16,13 @@ public class DriverClass {
 		System.out.println("|  help-> Show List                   |  quit-> Quit              |");
 		System.out.println("*******************************************************************");
 		
-        Scanner sc = new Scanner(System.in);
+		Scanner sc = new Scanner(System.in);
         boolean flag = true;
         while(flag) {
     		System.out.println("--------------------------------------------------------");
             System.out.print("Enter your choice: ");
             
             String choice = sc.nextLine();
-            
         	if(choice.equalsIgnoreCase("signup")) {   //user sign up	
         		UserService.signUp();
         		String[] temp = {""};
@@ -63,7 +62,6 @@ public class DriverClass {
             sc.nextLine();
             if(choice2.equalsIgnoreCase("n")) flag = false;
         }  
-        sc.close();
 	}  
 	 
 	public static void managerFun() {

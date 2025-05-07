@@ -1,5 +1,7 @@
 package project.SRBMS.entity;
 
+import java.io.IOException;
+
 abstract public class User {
 	public String id;
 	public String pass;
@@ -17,7 +19,7 @@ abstract public class User {
 		this.email = email;
 	}
 	
-	public abstract void showMenu();
+	public abstract void showMenu() throws IOException;
 	
 	public String toString() {
 		return "ID: " + id + ", name: " + name + ", email: " + email;
