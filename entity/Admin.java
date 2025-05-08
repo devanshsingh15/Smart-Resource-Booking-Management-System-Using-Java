@@ -19,21 +19,23 @@ public class Admin extends User{
 
 	@Override
 	public void showMenu() {
-		System.out.println("-----------------------------------------------------------------------------");
-		System.out.println("******************************WELCOME ADMIN**********************************");
-		System.out.println("|  showusers-> Show All Users        |  viewbookings-> View All Bookings    |");
-		System.out.println("|  showrooms-> Show All Rooms        |  reports-> Generate Reports          |");
-		System.out.println("|  signout-> Sign Out                |  help-> Show Features                |");
-		System.out.println("*****************************************************************************");
+		System.out.println("-----------------------------------------------------------------------------------");
+		System.out.println("*********************************WELCOME ADMIN*************************************");
+		System.out.println("|  showusers-> Show All Users          |  viewbookings-> View All Bookings        |");
+		System.out.println("|  showrooms-> Show All Rooms          |  reports-> Generate Reports              |");
+		System.out.println("|  signout-> Sign Out                  |  deleteuser-> Deleter User               |");
+		System.out.println("|  help-> Show Features                |                                          |");
+		System.out.println("***********************************************************************************");
 		
         boolean flag = true;
         while(flag) {
-    		System.out.println("-----------------------------------------------------------------------------");
+        	System.out.println("-----------------------------------------------------------------------------------");
             System.out.print("Enter your choice: ");
 			Scanner sc = new Scanner(System.in);
             
             String choice = sc.nextLine();
             if(choice.equalsIgnoreCase("showusers")) {
+            	System.out.println("-----------------------------------------------------------------------------------");
         		Database.showUsers();
         	}
         	else if(choice.equalsIgnoreCase("viewbookings")) {
@@ -51,19 +53,47 @@ public class Admin extends User{
         		String[] temp3 = {""};
             	DriverClass.main(temp3);
         	}
+        	else if(choice.equalsIgnoreCase("deleteuser")) {
+        		System.out.print("Enter User ID of User: ");
+        		String id = sc.nextLine();
+        		System.out.print("Enter email of User: ");
+        		String email = sc.nextLine();
+        		boolean isBook = false;
+        		RegularUser user = UserService.getUserbyEmail(id, email);
+        		if(user != null) {
+        			for(Booking b : Database.bookRecord) {
+            			if(b.user.id.equals(user.id)) {
+            				isBook = true;
+            				break;
+            			}
+            		}
+            		if(!isBook) {
+            			Database.users.remove(user);
+                		System.out.println("-----------------------------------------------------------------------------------");
+                		System.out.println("User Removed!!!");
+            		} else {
+                		System.out.println("-----------------------------------------------------------------------------------");
+            			System.out.println("User have bookings!!!");
+            		}
+        		} else {
+            		System.out.println("-----------------------------------------------------------------------------------");
+        			System.out.println("User not present!!!");
+        		}
+        	}
         	else if(choice.equalsIgnoreCase("help")) {
-        		System.out.println("-----------------------------------------------------------------------------");
-        		System.out.println("******************************WELCOME ADMIN**********************************");
-        		System.out.println("|  showusers-> Show All Users        |  viewbookings-> View All Bookings    |");
-        		System.out.println("|  showrooms-> Show All Rooms        |  reports-> Generate Reports          |");
-        		System.out.println("|  signout-> Sign Out                |  help-> Show Features List           |");
-        		System.out.println("*****************************************************************************");
+        		System.out.println("-----------------------------------------------------------------------------------");
+        		System.out.println("*********************************WELCOME ADMIN*************************************");
+        		System.out.println("|  showusers-> Show All Users          |  viewbookings-> View All Bookings        |");
+        		System.out.println("|  showrooms-> Show All Rooms          |  reports-> Generate Reports              |");
+        		System.out.println("|  signout-> Sign Out                  |  deleteuser-> Deleter User               |");
+        		System.out.println("|  help-> Show Features                |                                          |");
+        		System.out.println("***********************************************************************************");
         	}
         	else {
-        		System.out.println("-----------------------------------------------------------------------------");
+        		System.out.println("-----------------------------------------------------------------------------------");
         		System.out.println("Wrong choice");
         	}
-    		System.out.println("-----------------------------------------------------------------------------");
+            System.out.println("-----------------------------------------------------------------------------------");
             System.out.print("Do you want to continue(y/n)? ");
             String choice2 = sc.next();
             if(choice2.equals("n")) flag = false;

@@ -9,17 +9,17 @@ import project.SRBMS.service.*;
 @SuppressWarnings("resource")
 public class DriverClass {
 	public static void main(String[] args) {
-		System.out.println("-------------------------------------------------------------------");
-		System.out.println("*****************************WELCOME TO SRBMS**********************");
-		System.out.println("|  signup-> User Sign Up              |  signin-> User Sign In    |");
-		System.out.println("|  rmlogin-> Resource Manager Login   |  admin-> Admin Login      |");
-		System.out.println("|  help-> Show List                   |  quit-> Quit              |");
-		System.out.println("*******************************************************************");
+		System.out.println("-----------------------------------------------------------------------------------");
+		System.out.println("************************************WELCOME TO SRBMS*******************************");
+		System.out.println("|  signup-> User Sign Up                    |  signin-> User Sign In              |");
+		System.out.println("|  rmlogin-> Resource Manager Login         |  admin-> Admin Login                |");
+		System.out.println("|  help-> Show List                         |  quit-> Quit                        |");
+		System.out.println("***********************************************************************************");
 		
 		Scanner sc = new Scanner(System.in);
         boolean flag = true;
         while(flag) {
-    		System.out.println("--------------------------------------------------------");
+        	System.out.println("-----------------------------------------------------------------------------------");
             System.out.print("Enter your choice: ");
             
             String choice = sc.nextLine();
@@ -38,25 +38,25 @@ public class DriverClass {
         		adminFun();
         	}
         	else if(choice.equalsIgnoreCase("help")) {
-        		System.out.println("-------------------------------------------------------------------");
-        		System.out.println("*****************************WELCOME TO SRBMS**********************");
-        		System.out.println("|  signup-> User Sign Up              |  signin-> User Sign In    |");
-        		System.out.println("|  rmlogin-> Resource Manager Login   |  admin-> Admin Login      |");
-        		System.out.println("|  help-> Show List                   |  quit-> Quit              |");
-        		System.out.println("*******************************************************************");
+        		System.out.println("-----------------------------------------------------------------------------------");
+        		System.out.println("***********************************WELCOME TO SRBMS********************************");
+        		System.out.println("|  signup-> User Sign Up                 |  signin-> User Sign In                 |");
+        		System.out.println("|  rmlogin-> Resource Manager Login      |  admin-> Admin Login                   |");
+        		System.out.println("|  help-> Show List                      |  quit-> Quit                           |");
+        		System.out.println("***********************************************************************************");
         	}
         	else if(choice.equalsIgnoreCase("quit")) {
-        		System.out.println("--------------------------------------------------------");
+        		System.out.println("-----------------------------------------------------------------------------------");
         		System.out.println("Thank you for using application");
-        		System.out.println("--------------------------------------------------------");
+        		System.out.println("-----------------------------------------------------------------------------------");
         		System.exit(0);
         	}
         	else {
-        		System.out.println("--------------------------------------------------------");
+        		System.out.println("-----------------------------------------------------------------------------------");
         		System.out.println("Wrong choice");
         	}
         	
-    		System.out.println("--------------------------------------------------------");
+        	System.out.println("-----------------------------------------------------------------------------------");
             System.out.print("Do you want to continue(y/n)? ");
             String choice2 = sc.next();
             sc.nextLine();

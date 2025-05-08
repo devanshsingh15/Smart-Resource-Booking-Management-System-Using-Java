@@ -20,7 +20,7 @@ public class Room {
 	
 	@Override
 	public String toString() {
-		System.out.println("--------------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------------------------");
 		return "RoomID: " + id + ", Room Name: " + name + ", Type: " + type + ", Cost/hour: " + costPerHour + ", isAvailable: " + Database.rooms.get(this);
 	}
 

@@ -9,18 +9,28 @@ public class UserService {
 	
 	public static void signUp() {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("--------------------------------------------------------");
-		System.out.print("Enter name of user: ");
-		String name = sc.nextLine();
+		System.out.println("-----------------------------------------------------------------------------------");
+		
+		String name;
+		while(true) {
+			System.out.print("Enter name of user: ");
+			name = sc.nextLine();
+			if(!name.matches("^[A-Za-z][A-Za-z\\s'-]{1,49}$")) {
+				System.out.println("-----------------------------------------------------------------------------------");
+		        System.out.println("Invalid name format, try again.");
+		        System.out.println("Name should have atleast length of 2. No special character and digits are allowed.");
+				System.out.println("-----------------------------------------------------------------------------------");
+			} else break;
+		}
 		
 		String email;
 		while(true) {
 			System.out.print("Enter valid email of user: ");
 			email = sc.nextLine();
 			if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-				System.out.println("--------------------------------------------------------");
+				System.out.println("-----------------------------------------------------------------------------------");
 		        System.out.println("Invalid email format, try again");
-				System.out.println("--------------------------------------------------------");
+		        System.out.println("-----------------------------------------------------------------------------------");
 		    } else break;
 		}
 		
@@ -31,9 +41,9 @@ public class UserService {
 			System.out.print("Set password(must include lowercase, uppercase, and digit): ");
 			String pass1 = sc.nextLine();
 			if(!pass1.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$")) {
-				System.out.println("--------------------------------------------------------");
+				System.out.println("-----------------------------------------------------------------------------------");
 				System.out.println("Not a valid password, Try again");
-				System.out.println("--------------------------------------------------------");
+				System.out.println("-----------------------------------------------------------------------------------");
 			    continue;
 			}
 			System.out.print("Confirm password: ");
@@ -43,9 +53,9 @@ public class UserService {
 				UserService.addUser(id, pass1, name, email);
 				break;
 			} else {
-				System.out.println("--------------------------------------------------------");
+				System.out.println("-----------------------------------------------------------------------------------");
 				System.out.println("password did not match");
-				System.out.println("--------------------------------------------------------");
+				System.out.println("-----------------------------------------------------------------------------------");
 			}
 		}
 		
@@ -55,21 +65,21 @@ public class UserService {
 	public static void signIn() {
 		while(true) {
 			Scanner sc = new Scanner(System.in);
-			System.out.println("--------------------------------------------------------");
+			System.out.println("-----------------------------------------------------------------------------------");
 	    	System.out.print("Enter your username/ID: ");
 			String userID = sc.next();
 			System.out.print("Enter your password: ");
 			String pass = sc.next();
 			if(UserService.verifyUser(userID, pass)) {
-				System.out.println("--------------------------------------------------------");
+				System.out.println("-----------------------------------------------------------------------------------");
 				System.out.println("User Signed In Successfully");
 				RegularUser user = UserService.getUser(userID, pass);
 				user.showMenu();
 				break;
 			} else {
-	    		System.out.println("--------------------------------------------------------");
+				System.out.println("-----------------------------------------------------------------------------------");
 				System.out.println("Invalid credentials/User not registered. Try again.");
-	    		System.out.println("--------------------------------------------------------");
+				System.out.println("-----------------------------------------------------------------------------------");
 			}
 		}
 	}
@@ -77,9 +87,9 @@ public class UserService {
 	public static void addUser(String id, String pass, String name, String email) {
 		for (RegularUser u : Database.users) {
 			if (u != null && u.id.equals(id)) {
-				System.out.println("-------------------------------------------------------");
+				System.out.println("-----------------------------------------------------------------------------------");
 				System.out.println("User with this ID already exists!");
-				System.out.println("--------------------------------------------------------");
+				System.out.println("-----------------------------------------------------------------------------------");
 				return;
 			}
 		}
@@ -91,10 +101,9 @@ public class UserService {
 		}
 		
 		Database.users.add(user);
-		System.out.println("--------------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------------------------");
 		System.out.println("User Added successfully");
-		System.out.println("--------------------------------------------------------");
-		
+		System.out.println("-----------------------------------------------------------------------------------");
 	}
 
 	public static boolean verifyUser(String userID, String pass) {
@@ -111,11 +120,24 @@ public class UserService {
 		return null;
 	}
 	
+	public static RegularUser getUserbyEmail(String userID, String email) {
+		for(RegularUser user : Database.users) {
+			if(user.id.equals(userID) && user.email.equals(email)) return user;
+		}
+		return null;
+	}
+	
 	public static void showAvailRooms() {
+		boolean present = false;
 		for(Room room : Database.rooms.keySet()) {
 			if(Database.rooms.get(room)) {
 				System.out.println(room);
+				present = true;
 			}
+		}
+		if(!present) {
+			System.out.println("-----------------------------------------------------------------------------------");
+			System.out.println("No rooms are available!!!");
 		}
 	}
 
@@ -132,19 +154,10 @@ public class UserService {
 				Database.bookRecord.add(booking);
 				user.rooms.add(room);
 				room.count++;
-        		System.out.println("--------------------------------------------------------------------------");
+				System.out.println("-----------------------------------------------------------------------------------");
 				System.out.println("Room Booked");
 			}
 		}
-	}
-	
-	public static Room getRoom(String id) {
-		for(Room room : Database.rooms.keySet()) {
-			if(room.id.equals(id)) {
-				return room;
-			}
-		}
-		return null;
 	}
 
 	public static void cancelRoom(String id, RegularUser user, Room r) {
@@ -152,13 +165,13 @@ public class UserService {
 		for(Room rm : user.rooms) {
 			if(rm.id.equalsIgnoreCase(id)) {
 				Database.rooms.put(rm, true);
-				System.out.println("--------------------------------------------------------------------------");
+				System.out.println("-----------------------------------------------------------------------------------");
 				System.out.println("Room Cancelled");
 				present = true;
 			}
 		}
 		if(!present) {
-			System.out.println("--------------------------------------------------------------------------");
+			System.out.println("-----------------------------------------------------------------------------------");
 			System.out.println("No room booked with given id!!!");
 		}
 		if(present) user.rooms.remove(r);
@@ -187,7 +200,7 @@ public class UserService {
 
 	public static void showBookedRooms(RegularUser user) {
 		if (user.rooms.isEmpty()) {
-			System.out.println("--------------------------------------------------------------------------");
+			System.out.println("-----------------------------------------------------------------------------------");
 	        System.out.println("No rooms booked yet.");
 	        return;
 	    }
@@ -197,7 +210,7 @@ public class UserService {
 	}
 
 	public static void addToCart(RegularUser user,String id3, double time2) {
-		Room room = getRoom(id3);
+		Room room = ResourceService.getRoom(id3);
 		if(room != null) {
 			Booking booking = new Booking(user, room, time2, time2*room.costPerHour);
 			ArrayList<Booking> temp = Database.cart.get(user);
@@ -207,15 +220,15 @@ public class UserService {
 			if(Database.rooms.get(room)) {
 				temp.add(booking);
 				Database.cart.put(user, temp);
-        		System.out.println("--------------------------------------------------------------------------");
+				System.out.println("-----------------------------------------------------------------------------------");
 				System.out.println("added to cart");
 			}
 			else {
-        		System.out.println("--------------------------------------------------------------------------");
+				System.out.println("-----------------------------------------------------------------------------------");
 				System.out.println("Room not available");
 			}
 		} else {
-    		System.out.println("--------------------------------------------------------------------------");
+			System.out.println("-----------------------------------------------------------------------------------");
 			System.out.println("No such room present");
 		}
 	}
@@ -231,64 +244,64 @@ public class UserService {
 				}
 			}
 		}
-		System.out.println("--------------------------------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------------------------");
 		System.out.println("Total cart cost: " + cartCost);
 	}
 
 	public static void edit(RegularUser user) {
-		System.out.println("--------------------------------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------------------------");
 		System.out.print("What you want to edit(name/email/userID/pass)? ");
 		Scanner sc = new Scanner(System.in);
 		String ch = sc.nextLine();
 		
 		if(ch.equalsIgnoreCase("name")) {
-			System.out.println("--------------------------------------------------------");
+			System.out.println("-----------------------------------------------------------------------------------");
 			System.out.print("Enter new name of user: ");
 			String name = sc.nextLine();
 			user.name = name;
-			System.out.println("--------------------------------------------------------");
+			System.out.println("-----------------------------------------------------------------------------------");
 			System.out.println("Name updated");
 			return;
 		}
 		
 		else if(ch.equalsIgnoreCase("email")) {
-			System.out.println("--------------------------------------------------------");
+			System.out.println("-----------------------------------------------------------------------------------");
 			System.out.print("Enter valid email of user: ");
 			String email = sc.nextLine();
 			if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-				System.out.println("--------------------------------------------------------");
+				System.out.println("-----------------------------------------------------------------------------------");
 		        System.out.println("Invalid email format.");
-				System.out.println("--------------------------------------------------------");
+		        System.out.println("-----------------------------------------------------------------------------------");
 		        return;
 		    } else {
 		    	user.email = email;
-		    	System.out.println("--------------------------------------------------------");
+		    	System.out.println("-----------------------------------------------------------------------------------");
 				System.out.println("email updated");
 				return;
 		    }
 		}
 		
 		else if(ch.equalsIgnoreCase("userid")) {
-			System.out.println("--------------------------------------------------------");
+			System.out.println("-----------------------------------------------------------------------------------");
 			System.out.print("Enter new username/ID: ");
 			String id = sc.nextLine();
 			user.id = id;
-			System.out.println("--------------------------------------------------------");
+			System.out.println("-----------------------------------------------------------------------------------");
 			System.out.println("User ID updated");
 			return;
 		}
 		
 		else if(ch.equalsIgnoreCase("pass")) {
-			System.out.println("--------------------------------------------------------");
+			System.out.println("-----------------------------------------------------------------------------------");
 			System.out.print("Enter Old Passwrod: ");
 			String oldPass = sc.nextLine();
 			if(oldPass.equals(user.pass)) {
 				System.out.print("Set new password(must include lowercase, uppercase, and digit): ");
 				String pass1 = sc.nextLine();
 				if(!pass1.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$")) {
-					System.out.println("--------------------------------------------------------");
+					System.out.println("-----------------------------------------------------------------------------------");
 					System.out.println("Not a valid password(must include lowercase, uppercase, and digit).");
-					System.out.println("--------------------------------------------------------");
+					System.out.println("-----------------------------------------------------------------------------------");
 				    return;
 				}
 				System.out.print("Confirm new password: ");
@@ -296,25 +309,25 @@ public class UserService {
 				if(pass1.equals(pass2)) {
 					user.pass = pass1;
 				} else {
-					System.out.println("--------------------------------------------------------");
+					System.out.println("-----------------------------------------------------------------------------------");
 					System.out.println("password did not match");
-					System.out.println("--------------------------------------------------------");
+					System.out.println("-----------------------------------------------------------------------------------");
 				}
 			} else {
-				System.out.println("--------------------------------------------------------");
+				System.out.println("-----------------------------------------------------------------------------------");
 				System.out.println("Wrong Password");
-				System.out.println("--------------------------------------------------------");
+				System.out.println("-----------------------------------------------------------------------------------");
 			}
 		}
 		
 		else {
-			System.out.println("--------------------------------------------------------------------------");
+			System.out.println("-----------------------------------------------------------------------------------");
     		System.out.println("Wrong choice");
 		}
 	}
 
 	public static void show(RegularUser user) {
-		System.out.println("--------------------------------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------------------------");
 		System.out.println(user);
 	}
 }
