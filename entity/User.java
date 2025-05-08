@@ -17,7 +17,7 @@ abstract public class User {
 		this.email = email;
 	}
 	
-	public abstract void showMenu();
+	public abstract void showMenu() throws InterruptedException;
 	
 	public String toString() {
 		return "ID: " + id + ", name: " + name + ", email: " + email;

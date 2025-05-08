@@ -8,35 +8,43 @@ import project.SRBMS.repository.Database;
 
 public class ResourceService {
 
-	public static void addRoom(Room room) {
+	public static void addRoom(Room room) throws InterruptedException {
 		for(Room r : Database.rooms.keySet()) {
 			if(r.id.equals(room.id)) {
 				System.out.println("-----------------------------------------------------------------------------------");
+        		Thread.sleep(90);
 				System.out.println("room with same ID already present");
+        		Thread.sleep(90);
 				return;
 			}
 		}
 		Database.rooms.put(room, true);
 		System.out.println("-----------------------------------------------------------------------------------");
+		Thread.sleep(90);
 		System.out.println("Room added");
+		Thread.sleep(90);
 
 	}
 	
-	public static void editRoom(String id, double cost) {
+	public static void editRoom(String id, double cost) throws InterruptedException {
 		for(Room r : Database.rooms.keySet()) {
 			if(r.id.equals(id)) {
 				r.costPerHour = cost;
 				System.out.println("-----------------------------------------------------------------------------------");
+        		Thread.sleep(90);
 				System.out.println("Cost updated");
+        		Thread.sleep(90);
 				return;
 			}
 		}
 		System.out.println("-----------------------------------------------------------------------------------");
+		Thread.sleep(90);
 		System.out.println("Room not present");
+		Thread.sleep(90);
 	}
 	
 	
-	public static void deleteRoom(String id) {
+	public static void deleteRoom(String id) throws InterruptedException {
 		
 		boolean isBooked = false;
 		Room room = getRoom(id);
@@ -54,15 +62,21 @@ public class ResourceService {
 		        if (r.id.equals(id)) {
 		            it.remove(); 
 		            System.out.println("-----------------------------------------------------------------------------------");
+            		Thread.sleep(90);
 		            System.out.println("Room deleted");
+            		Thread.sleep(90);
 		            return;
 		        }
 		    }
 		    System.out.println("-----------------------------------------------------------------------------------");
+    		Thread.sleep(90);
 		    System.out.println("Room not present");
+    		Thread.sleep(90);
 		} else {
 		    System.out.println("-----------------------------------------------------------------------------------");
+    		Thread.sleep(90);
 		    System.out.println("Room have a booking");
+    		Thread.sleep(90);
 		}
 		
 	}
@@ -73,7 +87,7 @@ public class ResourceService {
 		}
 	}
 
-	public static void showBookedRooms() {
+	public static void showBookedRooms() throws InterruptedException {
 		boolean found = false;
 		for(Room room : Database.rooms.keySet()) {
 			if(!Database.rooms.get(room)) {
@@ -83,7 +97,9 @@ public class ResourceService {
 		}
 		if (!found) {
 			System.out.println("-----------------------------------------------------------------------------------");
+    		Thread.sleep(90);
 	        System.out.println("No rooms are booked.");
+    		Thread.sleep(90);
 	    }
 	}
 	
