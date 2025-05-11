@@ -31,7 +31,7 @@ public class UserService {
 		
 		String email;
 		while(true) {
-			System.out.print("Enter valid email of user: ");
+			System.out.print("Enter valid email of user(optional): ");
 			email = sc.nextLine();
     		Thread.sleep(90);
 			if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
@@ -181,7 +181,7 @@ public class UserService {
 			if(room.id.equals(id) && !Database.rooms.get(room)) {
 				System.out.println("room not available");
         		Thread.sleep(90);
-				return;
+				return;  
 			}
 			if(room.id.equals(id)) {
 				Database.rooms.put(room, false);

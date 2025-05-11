@@ -15,7 +15,9 @@ public class Database {
 		rooms.put(new Room("103", "Regular", "Single", 400), true);
 		rooms.put(new Room("201", "Lux", "Single", 300), true);
 		rooms.put(new Room("302", "Queen", "Double", 550), true);
-		rooms.put(new Room("202", "Regular", "Single", 250), true);		
+		rooms.put(new Room("202", "Regular", "Single", 250), true);	
+		
+		users.add(new RegularUser("dev", "Dev1", "Devansh", "devanshdmp15@gmail.com"));
 	}
 	
 	public static void showUsers() {
